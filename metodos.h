@@ -3,42 +3,47 @@
 #include <bits/stdc++.h>
 #include <listaTAD.h">
 //Funciones
-string getTop5(){
+string getTop5(Node* head){
     string top = "";
   for (int i = 0; i < 5; i++) {
-    top += to_string(getDisplay(i)) + "\n";
+    if (head != NULL){
+        top += getDisplay(i) + "\n";
+        head= head->next
+    }
   }
   return top;
 }
-string getAll(){
-    //obtiene todos los items
-    display();
-    
-}
-string mostrar(string elem){
-     //obtiene el siguiente item
-    getNext();
-    return 0
-}
-string borrar(string elem){=
-    remove(elem);
-}
-string reordenar(Node** head, string elem, int nPosicion); {
-    //reordena un item moviendolo de la posicion donde esta a una nueva.
-    if (esvacia(*head)) {
-        cout << "Error: lista vacía" << endl;
-        return;
-    }
-    int encontrado = buscarElem(*head, elem);
-    if (encontrado == -1) {
-        cout << "Error: elemento no encontrado" << endl;
-        return;
-    }
-    remove(head, elem);
-    insertar(head, elem, nPosicion);
-}
-    
 
+string mostrar(Node* head, string elem){
+     //obtiene el siguiente item
+    int posicion = buscarElem(head, elem);
+    if (posicion != -1) {
+        Node* siguiente = getNext(head, posicion);
+        if (siguiente != NULL) {
+            cout << siguiente->data << endl;
+        } else {
+            cout << "No hay un elemento siguiente después de '" << elem << "'" << endl;
+        }
+    } else {
+        cout << "Error: elemento no encontrado" << endl;
+    }
+}
+
+void borrar(Node* head, string elem){
+    remove(head, elem);
+}
+
+void reordenar(Node** head, string elem, int nPosicion); {
+    //reordena un item moviendolo de la posicion donde esta a una nueva.
+    int encontrado = buscarElem(*head, elem);
+    if (encontrado != -1) {
+        remove(head, elem);
+        insertar(head, elem, nPosicion);
+    } else {
+        cout << "Error: elemento no encontrado" << endl;
+    }
+}
+    
  int main() {
     Node* head = NULL;
     insertar(&head, "Manzana", 0);

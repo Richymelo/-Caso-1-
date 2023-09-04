@@ -29,6 +29,9 @@ void insertar(Node** head, string data, int posicion);{
     Node* nNode=agregar(data);
     if (posicion==0) {
         nNode->next= *head;
+        if (*head != NULL){
+            (*head)->prev =nNode;
+        }
         *head = nNode;
     } 
     else {
@@ -37,41 +40,48 @@ void insertar(Node** head, string data, int posicion);{
             temp=temp->next;
         }
         nNode->next=temp->next;
+        if (temp->next != NULL){
+            temp->next=nNode;
+        }
         temp->next=nNode;
+        nNode->prev=temp;
     }
 }
 
-Bool esvacia(Node* head); {
+bool esvacia(Node* head); {
     //determina si la lista esta vacia o no.
     return head==NULL;
 }
+
 int lenght(Node*head) {
     int cont = 0;
     while (head!=NULL) {
         cont++;
-        head=head->next;
+        head= head->next;
     }
     return cont;
 }
+
 int buscarElem(Node* head, string elem); {
     //busca el elemento indicado.
         while (head!=NULL) {
-        if (head->data==elem) {
-            return head->data;
-        }
+            if (head->data==elem) {
+                return 1;//si encuentra el elemento
+            }
         head=head->next;
     }
     return -1;//si no encuentra el elemento
 }
+
 void remove(Node** head, string data); {
     //elimina el elemento indicado.
     if (esvacia(*head)) {
         cout << "Error: lista vacia" << endl;
-        return 0;
+        return;
     }
     Node* temp = *head;
     while (temp != NULL) {
-        if (temp->data == elem) {
+        if (temp->data == data) {
             if (temp == *head) {
                 *head = temp->next;
                 if (*head!=NULL){
@@ -80,14 +90,18 @@ void remove(Node** head, string data); {
             } 
             else {
                 temp->prev->next = temp->next;
+                if (temp->next != NULL){
+                    temp->next->prev = temp->prev
+                }
                 
             }
             delete temp;
+            return;
         }
         temp = temp->next;
     }
 }
-int getDisplay(Node* head, int posicion); {
+string getDisplay(Node* head, int posicion); {
     //obtiene el item en la poscicion
     Node* temp = *head;
     for (int i = 0; i < posicion; i++) {
@@ -98,8 +112,8 @@ int getDisplay(Node* head, int posicion); {
 
 void display(Node*head); {
     while(head!=NULL){
-    cout << head->data << " ";
-    head = head->next;
+        cout << head->data << " ";
+        head = head->next;
     }
     cout<<endl;
 }

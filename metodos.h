@@ -33,15 +33,18 @@ void borrar(Node* head, string elem){
     remove(head, elem);
 }
 
-void reordenar(Node** head, string elem, int nPosicion); {
-    //reordena un item moviendolo de la posicion donde esta a una nueva.
-    int encontrado = buscarElem(*head, elem);
-    if (encontrado != -1) {
-        remove(head, elem);
-        insertar(head, elem, nPosicion);
-    } else {
-        cout << "Error: elemento no encontrado" << endl;
+void reordenar(Node** head, int elem, int nPosicion) {
+    if (esvacia(*head)) {
+        cout << "Error: lista vacía" << endl;
+        return;
     }
+    int encontrado = buscarElem(*head, elem);
+    if (encontrado == -1) {
+        cout << "Error: elemento no encontrado" << endl;
+        return;
+    }
+    remove(head, elem);
+    insertar(head, elem, nPosicion);
 }
     
  int main() {
